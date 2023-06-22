@@ -26,6 +26,7 @@ function App() {
     return (
         <div className="App">
             <Todolist truck={truck0} truck2={truck2} tasks={task1}/>
+            test
             <Todolist truck={truck1} truck3={truck3} tasks={task2}/>
         </div>
     );
