@@ -1,11 +1,9 @@
 import React from "react";
 
 type PropsType = {
-    truck: string
-    truck2?: number
-    truck3?: boolean
-    tasks: Array<TaskType>
-    //  tasks: TaskType[]
+    title: string
+    // tasks: Array<TaskType>
+     tasks: TaskType[]
 
 
 }
@@ -19,9 +17,7 @@ type TaskType = {
 export const Todolist = (props: PropsType) => {
     return (
         <div>
-            <h3>{props.truck}</h3>
-            <h3>{props.truck2}</h3>
-            <h3>{props.truck3}</h3>
+            <h3>{props.title}</h3>
             <div>
                 <input/>
                 <button>+</button>
