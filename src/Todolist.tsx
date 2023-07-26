@@ -1,8 +1,10 @@
 import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
-import {Button} from "./components/Button/Button";
 import {InputForm} from "./InputForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, Checkbox, Typography} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete'
+import ClearIcon from '@mui/icons-material/Clear'
 
 type PropsType = {
     title: string
@@ -14,10 +16,9 @@ type PropsType = {
     filter: string
     todoListsId: string
     removeTodoList: (todoListsId: string) => void
-    editableSpanTaskChanger: (todoListsId: string, title: string, id:string) => void
+    editableSpanTaskChanger: (todoListsId: string, title: string, id: string) => void
     editableSpanTitleChanger: (todoListsId: string, title: string) => void
 }
-
 export type TaskType = {
     id: string
     title: string
@@ -25,60 +26,57 @@ export type TaskType = {
 }
 
 export const Todolist = (props: PropsType) => {
-
-
-
     const removeTaskHandler = (todoListsId: string, eid: string) => {
         props.removeTask(todoListsId, eid)
     }
     const tsarChangeFilter = (todoListsId: string, value: FilterValuesType) => {
         props.changeFilter(todoListsId, value)
     }
-
-    const addTask =(title:string) =>{
+    const addTask = (title: string) => {
         props.addTask(props.todoListsId, title)
     }
-
     const removeTodoListHandler = () => {
         props.removeTodoList(props.todoListsId)
     }
-   const editableSpanTitleChangerHandler=(title:string) => {
+    const editableSpanTitleChangerHandler = (title: string) => {
         props.editableSpanTitleChanger(props.todoListsId, title)
     }
-
     return (
         <div>
-            <h3>
+            <Typography variant={"h5"}>
                 <EditableSpan title={props.title} callback={editableSpanTitleChangerHandler}/>
-                <button onClick={removeTodoListHandler}>x</button>
-            </h3>
+                <Button onClick={removeTodoListHandler}>
+                    <ClearIcon/>
+                </Button>
+            </Typography>
             <InputForm addNewItem={addTask}/>
-            <ul>
+            <div>
                 {props.tasks.map((el) => {
                     const onChangeInputHandler = (isDone: ChangeEvent<HTMLInputElement>) => {
                         props.isDoneChanger(props.todoListsId, el.id, isDone.currentTarget.checked)
                     }
-                    const editableSpanChangerHandler = (title:string)=> {
+                    const editableSpanChangerHandler = (title: string) => {
                         props.editableSpanTaskChanger(props.todoListsId, el.id, title)
                     }
-                    return <li key={el.id} className={el.isDone === true ? "completed" : ""}>
-                        <input
+                    return <div key={el.id} className={el.isDone === true ? "completed" : ""}>
+                        <Checkbox
+                            size={"small"}
                             onChange={onChangeInputHandler}
-                            type="checkbox"
                             checked={el.isDone}/>
                         <EditableSpan callback={editableSpanChangerHandler} title={el.title}/>
-                        <Button className={''} name={'x'} callBack={() => removeTaskHandler(props.todoListsId, el.id)}/>
-                    </li>
+                        <Button onClick={() => removeTaskHandler(props.todoListsId, el.id)}>
+                            <DeleteIcon/>
+                        </Button>
+                    </div>
                 })}
-            </ul>
-
+            </div>
             <div>
-                <Button className={props.filter === 'all' ? "activeFilter" : ""}
-                        callBack={() => tsarChangeFilter(props.todoListsId, 'all')} name={'All'}/>
-                <Button className={props.filter === 'active' ? "activeFilter" : ""}
-                        callBack={() => tsarChangeFilter(props.todoListsId, 'active')} name={'Active'}/>
-                <Button className={props.filter === 'completed' ? "activeFilter" : ""}
-                        callBack={() => tsarChangeFilter(props.todoListsId, 'completed')} name={'Completed'}/>
+                <Button variant={props.filter === 'all' ? "contained" : "text"}
+                        onClick={() => tsarChangeFilter(props.todoListsId, 'all')}>All</Button>
+                <Button variant={props.filter === 'active' ? "contained" : "text"}
+                            onClick={() => tsarChangeFilter(props.todoListsId, 'active')}>Active</Button>
+                <Button variant={props.filter === 'completed' ? "contained" : "text"}
+                            onClick={() => tsarChangeFilter(props.todoListsId, 'completed')}>Completed</Button>
             </div>
         </div>
     )

@@ -1,8 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "./components/Button/Button";
+import {Button, TextField} from "@mui/material";
+import ControlPointIcon from '@mui/icons-material/ControlPoint'
 
 type InputForm = {
-    // title: string
     addNewItem: (title: string) => void
 }
 export const InputForm = (props: InputForm) => {
@@ -32,12 +32,17 @@ export const InputForm = (props: InputForm) => {
 
     return (
         <div>
-            <input className={error !== '' ? "error" : ''}
-                   value={title}
-                   onKeyDown={onKeyPressHandler}
-                   onChange={onChangeHandler}/>
-            <Button className={''} callBack={addTaskHandler} name={'+'}/>
-            {error && <div className="errorMassage">{error}</div>}
+            <TextField error={!!error}
+                       helperText={error ? error : ''}
+                       id="standard-basic"
+                       label="Input title"
+                       variant="outlined"
+                       value={title}
+                       onKeyDown={onKeyPressHandler}
+                       onChange={onChangeHandler}/>
+            <Button variant={"text"} onClick={addTaskHandler}>
+                <ControlPointIcon/>
+            </Button>
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import './Button.module.css';
+import './ButtonComp.module.css';
+import {Button} from "@mui/material";
 
 type ButtonProps = {
     name: string
@@ -8,12 +9,12 @@ type ButtonProps = {
 }
 
 
-export const Button = (props: ButtonProps) => {
+export const ButtonComp = (props: ButtonProps) => {
     const onClickHandler = () => {
         props.callBack()
     }
     console.log(props.className)
     return (
-        <button className={props.className} onClick={onClickHandler}>{props.name}</button>
+        <Button className={props.className} onClick={onClickHandler}>{props.name}</Button>
     )
 }
